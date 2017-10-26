@@ -1,0 +1,29 @@
+<head>
+    <link rel="stylesheet" href="{{ asset("Styles/LoginPageStyle.css") }}">
+</head>
+{% if error %}
+    <div id="win">
+    <div class="overlay"></div>
+    <div class="visible">
+        <h2>Incorrect password or login</h2>
+        <div class="content">
+            <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+        </div>
+        <button type="button" onClick="getElementById('win').style.display='none';">Close</button>
+    </div>
+</div>
+{% endif %}
+
+<div class = "container">
+    <div class="wrapper">
+<form action="{{ path('login') }}" method="post" name="Login_Form" class="form-signin">
+    <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+    <hr class="colorgraph"><br>
+    <input type="text" class="form-control" placeholder="Username" id="username" name="_username" value="{{ last_username }}" required="" autofocus=""/>
+    <input type="password" id="password" name="_password" class="form-control" placeholder="Password" required=""/>
+    <button class="btn btn-lg btn-primary btn-login"  name="Submit" value="Login" type="Submit">Login</button>
+    <button class="btn btn-lg btn-primary btn-block"  name="BUTTON" value="Registraition" type="Button">Registraition</button>
+</form>
+    </div>
+</div>
+</form>
