@@ -25,7 +25,7 @@ class RegistrationController extends Controller
                                        RegistrationManager $manager,
                                        \Swift_Mailer $mailer) {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('news');
+            return $this->redirectToRoute('quiz');
         }
         $user = new User();
         $form = $this->createForm(UserType::class, $user);

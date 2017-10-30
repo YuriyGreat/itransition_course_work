@@ -10,11 +10,12 @@ namespace AppBundle\DBManager;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use AppBundle\Entity\User;
-use AppBundle\Entity\UserKey;
+use AppBundle\Entity\UserToken;
 
 class UserDBManager
 {
     private $db;
+    const BYTE_COUNT = 32;
     const REGISTRATION_TYPE = 'registration';
     const RECOVER_TYPE = 'recover';
 
@@ -25,10 +26,10 @@ class UserDBManager
 
     public function addUser(User $user)
     {
-        $userKey = new UserKey($user, self::REGISTRATION_TYPE, $this->getToken(), $this->getTime());
-        $user->setUserKey($userKey);
+        $userToken = new UserToken($user, self::REGISTRATION_TYPE, $this->getToken(), $this->getTime());
+        $user->setUserToken($userToken);
         $this->db->persist($user);
-        $this->db->persist($userKey);
+        $this->db->persist($userToken);
         $this->db->flush();
     }
 
@@ -46,11 +47,11 @@ class UserDBManager
 
     public function getUserByToken(string $token):? User
     {
-        $userKey = $this->db
-            ->getRepository('AppBundle\Entity\UserKey')
+        $userToken = $this->db
+            ->getRepository('AppBundle\Entity\UserToken')
             ->findOneBy(['token' => $token]);
-        if ($userKey) {
-            return $userKey->getUser();
+        if ($userToken) {
+            return $userToken->getUser();
         } else {
             return null;
         }
@@ -71,38 +72,38 @@ class UserDBManager
     public function activateUser(User $user)
     {
         $user->setIsActive(true);
-        $userKey = $user->getUserKey();
-        $this->db->remove($userKey);
+        $userToken = $user->getUserToken();
+        $this->db->remove($userToken);
         $this->db->flush();
     }
 
     public function resetPassword(User $user)
     {
-        $userKey = new UserKey($user, self::RECOVER_TYPE, $this->getToken(), $this->getTime());
-        $user->setUserKey($userKey);
+        $userToken = new UserToken($user, self::RECOVER_TYPE, $this->getToken(), $this->getTime());
+        $user->setUserToken($userToken);
         $this->db->persist($user);
-        $this->db->persist($userKey);
+        $this->db->persist($userToken);
         $this->db->flush();
     }
 
     public function updatePassword(User $user)
     {
-        $userKey = $user->getUserKey();
-        $this->db->remove($userKey);
+        $userToken = $user->getUserToken();
+        $this->db->remove($userToken);
         $this->db->persist($user);
         $this->db->flush();
     }
 
     public function isRegistrationToken(string $token): bool
     {
-        $userKey = $this->getUserByToken($token)->getUserKey();
-        return $userKey->getType() === self::REGISTRATION_TYPE;
+        $userToken = $this->getUserByToken($token)->getUserToken();
+        return $userToken->getType() === self::REGISTRATION_TYPE;
     }
 
     public function isRecoverToken(string $token): bool
     {
-        $userKey = $this->getUserByToken($token)->getUserKey();
-        return $userKey->getType() === self::RECOVER_TYPE;
+        $userToken = $this->getUserByToken($token)->getUserToken();
+        return $userToken->getType() === self::RECOVER_TYPE;
     }
 
     private function getToken(): string

@@ -17,6 +17,7 @@ class DefaultController extends Controller
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('news');
         }
+
         $error = $authUtils->getLastAuthenticationError();
         $email = $authUtils->getLastUsername();
         return $this->render('form/signIn.html.twig', [

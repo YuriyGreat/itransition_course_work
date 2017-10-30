@@ -40,7 +40,9 @@ class RegistrationManager
 
     private function encodePassword(User $user)
     {
+        echo 'pss-'.$user->getPlainPassword();
         $encodedPassword = $this->encoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($encodedPassword);
+        echo '-epss-'.$user->getPassword();
     }
 }
