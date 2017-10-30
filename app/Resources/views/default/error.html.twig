@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/signin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container panelForm">
+        <a href="{{ path('homepage') }}">
+            <img src="{{ asset('NewsLogo.jpg') }}" class="logo" alt="logo">
+        </a>
+
+        {% block form %}{% endblock %}
+    </div>
+
+    {% block message %}{% endblock %}
+{% endblock %}
