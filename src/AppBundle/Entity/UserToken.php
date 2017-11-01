@@ -12,8 +12,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="user_keys")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserKeyRepository")
+ * @ORM\Table(name="user_tokens")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserTokenRepository")
  */
 class UserToken
 {
@@ -25,7 +25,7 @@ class UserToken
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="userKey")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="userToken")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

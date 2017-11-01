@@ -8,7 +8,7 @@ security:
             our_db_provider:
                         entity:
                             class: AppBundle:User
-                            property: username
+                            property: email
     encoders:
             AppBundle\Entity\User:
                    algorithm: bcrypt
@@ -34,8 +34,8 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             form_login:
-              login_path: login
-              check_path: login
+              login_path: homepage
+              check_path: homepage
     access_control:
             # require ROLE_ADMIN for /admin*
             - { path: ^/admin, roles: ROLE_ADMIN }

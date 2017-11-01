@@ -121,7 +121,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return [$his->role];
+        return [$this->role];
     }
 
     public function setIsActive(bool $isActive)

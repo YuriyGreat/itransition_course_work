@@ -15,11 +15,14 @@ class DefaultController extends Controller
     public function indexAction(AuthenticationUtils $authUtils)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('news');
+            return $this->redirectToRoute('quiz');
         }
+
 
         $error = $authUtils->getLastAuthenticationError();
         $email = $authUtils->getLastUsername();
+        echo '<br>'.$email.'<br>';
+
         return $this->render('form/signIn.html.twig', [
             'email' => $email,
             'error' => $error
